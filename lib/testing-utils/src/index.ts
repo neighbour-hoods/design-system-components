@@ -1,1 +1,3 @@
-// TODO
+import factory from './factory'
+
+export { factory }

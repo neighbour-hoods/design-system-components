@@ -32,6 +32,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "@neighbourhoods/client": "0.0.6",
     "@lit-labs/scoped-registry-mixin": "^1.0.1",
     "@neighbourhoods/design-system-components": "workspace:*",
     "@neighbourhoods/design-system-styles": "^0.0.3",

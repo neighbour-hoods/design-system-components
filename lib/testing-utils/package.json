@@ -25,6 +25,8 @@
     "build": "vite build && tsc -p ./tsconfig.build.json"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "fishery": "^2.2.2",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"

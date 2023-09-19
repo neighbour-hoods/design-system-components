@@ -5,9 +5,9 @@ import { describe, expect, test, beforeEach, afterEach } from 'vitest';
 import { MatrixTestHarness, MockMatrixStoreOptions } from '../matrix';
 import { ConfigDimension } from '@neighbourhoods/client';
 
-// /**
-//  * @vitest-environment jsdom
-//  */
+/**
+ * @vitest-environment jsdom
+ */
 
 describe('When a mock Matrix store is initialised with a dimensions-pair', () => {
     let store: any;
@@ -57,7 +57,7 @@ describe('When a mock Matrix store is initialised with state', () => {
     component = undefined;
   });
 
-  describe('And a Matrix store provider wraps a component', () => {
+  describe('And a Matrix store provider wraps a test-component', () => {
     beforeEach(async() => {
       component = await store.wrap('test-component');
     });
@@ -65,7 +65,7 @@ describe('When a mock Matrix store is initialised with state', () => {
       expect(component).toBeDefined()
       expect(component instanceof MatrixTestHarness).toBeTruthy()
     });
-    test(`And the component state is mocked`, async () => {
+    test(`And the component state is mocked in the test-component`, async () => {
       // expect(component instanceof MatrixTestHarness).toBeTruthy()
     });
 

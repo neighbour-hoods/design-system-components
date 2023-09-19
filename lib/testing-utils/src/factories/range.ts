@@ -23,7 +23,18 @@ const outputIntegerBig: Range = {
 const ALL_RANGES = [inputInteger1, inputInteger5, outputIntegerBig]
 
 function range(forDimension: string): Range {
-  return faker.helpers.arrayElement(ALL_RANGES)
+  switch (forDimension) {
+    case 'likes':
+      return inputInteger1
+    case 'importance':
+      return inputInteger1
+    case 'total-importance':
+      return outputIntegerBig
+    case 'total-likes':
+      return outputIntegerBig
+    default:
+      return faker.helpers.arrayElement(ALL_RANGES)
+  }
 }
 
 export default range;

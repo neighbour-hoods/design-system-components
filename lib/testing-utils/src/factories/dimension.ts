@@ -3,7 +3,7 @@ import { ConfigDimension, Dimension } from '@neighbourhoods/client';
 import hash from "./hash";
 import range from "./range";
 
-export const OBJECTIVE_DIMENSION_NAMES = ['total_importance', 'average_heat', 'total_likes', 'average_stars', 'total_flags'];
+export const OBJECTIVE_DIMENSION_NAMES = ['total-importance', 'average-heat', 'total-likes', 'average-stars', 'total_flags'];
 export const SUBJECTIVE_DIMENSION_NAMES = ['importance', 'heat', 'like', 'star', 'flag'];
 
 export type DimensionPairNames = 'likes/total-likes' | 'importance/total-importance';

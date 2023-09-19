@@ -31,37 +31,62 @@ const MockMatrixStore = {
   mockDimensions: [] as ConfigDimension[],
 
   init(options: MockMatrixStoreOptions = { includeDimensions: [], includeStores: []}){
+    if(typeof customElements.get('matrix-test-harness') == 'undefined') customElements.define('matrix-test-harness', MatrixTestHarness)
+
     const store : any = {};
 
+    /**
+     * Setting up mock store Sensemaker primitives
+    */
+
     if(options.includeDimensions.length > 0) {
+      /**
+       * DIMENSIONS:
+      */ 
       this.mockDimensions = generateMockDimensionsResponse(options.includeDimensions)// Todo: need to stringify values? //.map((dimension: ConfigDimension) => (dimension))
     }
-    if(options?.includeStores?.includes('profiles')) {
-    }
-    if(options?.includeStores?.includes('sensemaker')) {
-    }
-
-    if(typeof customElements.get('matrix-test-harness') == 'undefined') customElements.define('matrix-test-harness', MatrixTestHarness)
     
+    /**
+     * Adding nested stores where requested & populating
+    */
+    this.addNestedStores(options.includeStores)
+    this.populateNestedStores(options.includeStores)
+
     // Set up mocks for direct zome calls as needed/implemented by your component
-    // const mockClient = () => ({
-    //   appInfo: vi.fn(() => ({
-    //     cell_info: {
-    //       sensemaker: [null, { cloned: { cell_id: 'mock-cell-id' } }],
-    //     },
-    //   })),
-    //   callZome: vi.fn(({functionName} : any) => {
-    //     switch (functionName) {
-    //       case 'get_dimensions':
-    //         return this.mockDimensions.map((dimension : string) => ({entry: { Present: { 'entry': encode({...dimension}) } }}))
-    //       default:
-    //         break;
-    //     }
-    //   }),
-    // });
-    // store.client = mockClient();
+    const mockClient = () => ({
+      appInfo: vi.fn(() => ({
+        cell_info: {
+          sensemaker: [null, { cloned: { cell_id: 'mock-cell-id' } }], // TODO: add cell factory and use here?
+        },
+      })),
+      callZome: vi.fn(({functionName} : any) => {
+        switch (functionName) {
+          case 'get_dimensions':
+            return this.mockDimensions.map((dimension : ConfigDimension) => ({entry: { Present: { 'entry': encode({...dimension}) } }}))
+          // case 'another_zome_call':
+            // Add your mock response here for direct zome calls
+          default:
+            return {}
+        }
+      }),
+    });
+    store.client = mockClient();
 
     return store;
+  },
+
+  addNestedStores(stores: NestedStore[]) {
+    if(stores?.includes('profiles')) {
+    }
+    if(stores?.includes('sensemaker')) {
+    }
+  },
+
+  populateNestedStores(stores: NestedStore[]) {
+    if(stores?.includes('profiles')) {
+    }
+    if(stores?.includes('sensemaker')) {
+    }
   },
 
   async wrap(component: any) {

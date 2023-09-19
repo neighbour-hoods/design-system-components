@@ -27,16 +27,16 @@ export class MatrixTestHarness extends LitElement {
 }
 
 const MockMatrixStore = {
-  mockDimensions: [''],
-  init(options: MockMatrixStoreOptions){
+  mockDimensions: [] as ConfigDimension[],
+  init(options: MockMatrixStoreOptions = { includeDimensions: [], includeStores: []}){
     const store : any = {};
 
     if(options.includeDimensions.length > 0) {
-      this.mockDimensions = generateMockDimensionsResponse(options.includeDimensions).map((dimension: ConfigDimension) => JSON.stringify(dimension))
+      this.mockDimensions = generateMockDimensionsResponse(options.includeDimensions)// Todo: need to stringify values? //.map((dimension: ConfigDimension) => (dimension))
     }
-    if(options.includeStores.includes('profiles')) {
+    if(options?.includeStores?.includes('profiles')) {
     }
-    if(options.includeStores.includes('sensemaker')) {
+    if(options?.includeStores?.includes('sensemaker')) {
     }
     
     // Set up mocks for direct zome calls as needed/implemented by your component
@@ -57,7 +57,6 @@ const MockMatrixStore = {
     // });
     // store.client = mockClient();
 
-return 'hi'
   },
   wrap(component: any) {
 

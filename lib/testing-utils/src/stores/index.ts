@@ -1,4 +1,4 @@
 import matrix from './matrix'
 import sensemaker from './sensemaker'
 
-export { matrix, sensemaker }
+export default { matrix, sensemaker }

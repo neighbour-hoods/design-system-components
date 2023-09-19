@@ -1,3 +1,4 @@
-import factory from './factory'
+import factory from './factories'
+import stores from './stores'
 
-export { factory }
+export { factory, stores }

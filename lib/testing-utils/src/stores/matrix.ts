@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit';
+import { fixture, html as testHtml } from '@open-wc/testing';
 import { property } from 'lit/decorators.js';
 import { contextProvider } from '@lit-labs/context';
 import { matrix } from './contexts';
@@ -28,6 +29,7 @@ export class MatrixTestHarness extends LitElement {
 
 const MockMatrixStore = {
   mockDimensions: [] as ConfigDimension[],
+
   init(options: MockMatrixStoreOptions = { includeDimensions: [], includeStores: []}){
     const store : any = {};
 
@@ -38,6 +40,8 @@ const MockMatrixStore = {
     }
     if(options?.includeStores?.includes('sensemaker')) {
     }
+
+    if(typeof customElements.get('matrix-test-harness') == 'undefined') customElements.define('matrix-test-harness', MatrixTestHarness)
     
     // Set up mocks for direct zome calls as needed/implemented by your component
     // const mockClient = () => ({
@@ -57,9 +61,11 @@ const MockMatrixStore = {
     // });
     // store.client = mockClient();
 
+    return store;
   },
-  wrap(component: any) {
 
+  async wrap(component: any) {
+    return fixture(testHtml`<matrix-test-harness>${component}</matrix-test-harness>`)
   },
 };
 

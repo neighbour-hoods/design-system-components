@@ -7,12 +7,26 @@ import { vi } from 'vitest';
 import { ConfigDimension } from '@neighbourhoods/client';
 import { DimensionPairNames, generateMockDimensionsResponse } from '../factories/dimension';
 import { encode } from '@msgpack/msgpack';
+import { literal, html as staticHtml, unsafeStatic } from "lit/static-html.js";
+const { JSDOM } = require('jsdom');
 
 type NestedStore = 'profiles' | 'sensemaker';
 
 export interface MockMatrixStoreOptions {
   includeStores: NestedStore[]
+  // neighbourhoods: [
+  //   {
+  //     name: string,
+  //     includedStores: [
+  //       'profiles'
+  //   ]},{
+  //   name: string,
+  //   includedStores: [
+  //     'sensemaker', 'profiles'
+  //   ]}],
+
   includeDimensions: DimensionPairNames[]
+  // Currently dimensions need to be mocked here as a zome call for dimensions is made on the matrix store's client
 };
 export class MatrixTestHarness extends LitElement {
   /**

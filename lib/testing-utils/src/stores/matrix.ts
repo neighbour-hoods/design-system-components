@@ -27,13 +27,12 @@ export class MatrixTestHarness extends LitElement {
   }
 }
 
-const MockMatrixStore: { mockDimensions: ConfigDimension[], init: Function, addNestedStores: Function, populateNestedStores: Function, generateMockClient: Function, wrap: Function } = {
+const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Function, addNestedStores: Function, populateNestedStores: Function, generateMockClient: Function, wrap: Function } = {
+  store: {},
   mockDimensions: [] as ConfigDimension[],
 
   init(options: MockMatrixStoreOptions = { includeDimensions: [], includeStores: []}){
     if(typeof customElements.get('matrix-test-harness') == 'undefined') customElements.define('matrix-test-harness', MatrixTestHarness)
-
-    const store : any = {};
 
     /**
      * Setting up mock store Sensemaker primitives
@@ -53,9 +52,9 @@ const MockMatrixStore: { mockDimensions: ConfigDimension[], init: Function, addN
     this.populateNestedStores(options.includeStores)
 
     // Set up mocks for direct zome calls as needed/implemented by your component
-    store.client = this.generateMockClient();
+    this.store.client = this.generateMockClient();
 
-    return store;
+    return this.store;
   },
 
   addNestedStores(stores: NestedStore[]) {

@@ -93,7 +93,16 @@ const MockMatrixStore: { mockDimensions: ConfigDimension[], init: Function, addN
   },
 
   async wrap(component: any) {
-    return fixture(testHtml`<matrix-test-harness>${component}</matrix-test-harness>`)
+    const staticComponent = staticHtml`<${unsafeStatic(`${component}`)}></${unsafeStatic(`${component}`)}>`
+    const harness : Element = await fixture(testHtml`<matrix-test-harness ._matrixStore=${this.store}>${staticComponent}</matrix-test-harness>`)
+    const ref = harness.querySelector(component);
+    const updateComplete = await ref?.updateComplete;
+    // console.log('updateComplete for', staticComponent, ' IS :>> ', updateComplete);
+    let jsdom;
+    if(updateComplete) {
+      jsdom = new JSDOM(ref.renderRoot.innerHTML)
+    }
+    return { harness, ref, jsdom }
   },
 };
 

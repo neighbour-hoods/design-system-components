@@ -46,6 +46,7 @@ const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Fu
   mockDimensions: [] as ConfigDimension[],
 
   init(options: MockMatrixStoreOptions = { includeDimensions: [], includeStores: []}){
+    options.includeDimensions ||= [];
     if(typeof customElements.get('matrix-test-harness') == 'undefined') customElements.define('matrix-test-harness', MatrixTestHarness)
 
     /**

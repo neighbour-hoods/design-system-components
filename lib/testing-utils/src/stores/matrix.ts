@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, TemplateResult, html } from 'lit';
 import { fixture, html as testHtml } from '@open-wc/testing';
 import { property } from 'lit/decorators.js';
 import { contextProvider } from '@lit-labs/context';
@@ -7,7 +7,12 @@ import { vi } from 'vitest';
 import { ConfigDimension } from '@neighbourhoods/client';
 import { DimensionPairNames, generateMockDimensionsResponse } from '../factories/dimension';
 import { encode } from '@msgpack/msgpack';
-import { literal, html as staticHtml, unsafeStatic } from "lit/static-html.js";
+import { html as staticHtml, unsafeStatic } from "lit/static-html.js";
+import { DnaHash, HoloHash } from '@holochain/client';
+import { Profile } from '@holochain-open-dev/profiles';
+import { AsyncReadable, AsyncStatus, readable } from "@holochain-open-dev/stores";
+import profile from '../factories/profile';
+
 const { JSDOM } = require('jsdom');
 
 type NestedStore = 'profiles' | 'sensemaker';
@@ -41,7 +46,7 @@ export class MatrixTestHarness extends LitElement {
   }
 }
 
-const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Function, addNestedStores: Function, populateNestedStores: Function, generateMockClient: Function, wrap: Function } = {
+const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Function, addNestedStores: Function, generateProfileStore: Function, mockLazyHoloHashMap: Function, populateNestedStores: Function, generateMockClient: Function, wrap: Function } = {
   store: {},
   mockDimensions: [] as ConfigDimension[],
 
@@ -74,6 +79,8 @@ const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Fu
 
   addNestedStores(stores: NestedStore[]) {
     if(stores?.includes('profiles')) {
+      const mockProfilesResponse = this.generateProfileStore();
+      this.store.profilesStore =  vi.fn((_weGroupId: DnaHash | undefined) => mockProfilesResponse)
     }
     if(stores?.includes('sensemaker')) {
     }
@@ -84,6 +91,24 @@ const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Fu
     }
     if(stores?.includes('sensemaker')) {
     }
+  },
+
+  generateProfileStore() {
+    return {
+      profiles: this.mockLazyHoloHashMap()
+    }
+  },
+
+  mockLazyHoloHashMap() { // Currently just for profiles
+    const mockMap = new Map<HoloHash,Partial<AsyncReadable<Profile | undefined>>>();
+    const statusReadable = readable<AsyncStatus<Profile>>();
+
+    mockMap.get = vi.fn((_key: HoloHash) => ({
+      status: "complete", 
+      subscribe: statusReadable.subscribe,
+      "value": profile()
+    }))
+    return mockMap
   },
 
   generateMockClient() {
@@ -107,7 +132,7 @@ const MockMatrixStore: { store: any, mockDimensions: ConfigDimension[], init: Fu
   },
 
   async wrap(component: any) {
-    const staticComponent = staticHtml`<${unsafeStatic(`${component}`)}></${unsafeStatic(`${component}`)}>`
+    const staticComponent : TemplateResult = staticHtml`<${unsafeStatic(`${component}`)}></${unsafeStatic(`${component}`)}>`
     const harness : Element = await fixture(testHtml`<matrix-test-harness ._matrixStore=${this.store}>${staticComponent}</matrix-test-harness>`)
     const ref = harness.querySelector(component);
     const updateComplete = await ref?.updateComplete;

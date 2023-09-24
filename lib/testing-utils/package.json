@@ -25,10 +25,13 @@
     "build": "vite build && tsc -p ./tsconfig.build.json"
   },
   "devDependencies": {
+    "@holochain-open-dev/profiles": "^0.16.1",
+    "@holochain-open-dev/stores": "^0.7.0",
+    "@holochain/client": "^0.16.2",
+    "@msgpack/msgpack": "^2.7.2",
+    "@open-wc/testing": "^3.1.8",
     "fishery": "^2.2.2",
     "jsdom": "^22.0.0",
-    "@open-wc/testing": "^3.1.8",
-    "@msgpack/msgpack": "^2.7.2",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"

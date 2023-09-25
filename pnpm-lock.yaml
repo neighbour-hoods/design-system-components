@@ -8,7 +8,7 @@ importers:
       '@base2/pretty-print-object': ^1.0.2
       '@faker-js/faker': ^8.0.2
       '@mdx-js/react': ^2.3.0
-      '@neighbourhoods/design-system-styles': ^0.0.3
+      '@neighbourhoods/design-system-styles': ^0.0.5
       '@storybook/addon-actions': ^7.4.0
       '@storybook/addon-essentials': ^7.4.0
       '@storybook/addon-links': ^7.4.0
@@ -39,7 +39,7 @@ importers:
       '@base2/pretty-print-object': 1.0.2
       '@faker-js/faker': 8.0.2
       '@mdx-js/react': 2.3.0_react@17.0.2
-      '@neighbourhoods/design-system-styles': 0.0.3
+      '@neighbourhoods/design-system-styles': 0.0.5
       '@storybook/addon-actions': 7.4.0_6l5554ty5ajsajah6yazvrjhoe
       '@storybook/addon-essentials': 7.4.0_6l5554ty5ajsajah6yazvrjhoe
       '@storybook/addon-links': 7.4.0_6l5554ty5ajsajah6yazvrjhoe
@@ -66,7 +66,7 @@ importers:
   components/design-system:
     specifiers:
       '@lit-labs/scoped-registry-mixin': ^1.0.1
-      '@neighbourhoods/design-system-styles': ^0.0.3
+      '@neighbourhoods/design-system-styles': ^0.0.5
       '@shoelace-style/shoelace': ^2.8.0
       lit: ^2.2.0
       tslib: ^2.6.2
@@ -74,7 +74,7 @@ importers:
       vite: ^4.4.9
     dependencies:
       '@lit-labs/scoped-registry-mixin': 1.0.1
-      '@neighbourhoods/design-system-styles': 0.0.3
+      '@neighbourhoods/design-system-styles': 0.0.5
       '@shoelace-style/shoelace': 2.8.0
       lit: 2.8.0
     devDependencies:
@@ -2296,6 +2296,10 @@ packages:
 
   /@neighbourhoods/design-system-styles/0.0.3:
     resolution: {integrity: sha512-umGWJFE0ielqTw4T7P4yMmXabZkPDpnXa/zqiet//ogSr0o3t7RxtIYf8yj5SbHT1rZnSm/bH8oePy++1xZ0pQ==}
+    dev: false
+
+  /@neighbourhoods/design-system-styles/0.0.5:
+    resolution: {integrity: sha512-8HA4AeAkGQEybCv9Ow/qh497gu4yxemLMHHNL5Dw5GZpuBHlXjkBg6hm0PAWTOPolrGK8+L2ld02uT5xmQJrFA==}
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

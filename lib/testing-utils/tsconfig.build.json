@@ -12,5 +12,5 @@
     },
   },
   "include": ["./src/**/*.ts"],
-  "exclude": ["./src/**/*.d.ts", "**/*.stories.*"]
+  "exclude": ["./src/**/*.d.ts", "**/*.stories.*", "**/*.test.*","**/__tests__/**/*.*",]
 }

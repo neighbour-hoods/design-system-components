@@ -5,7 +5,7 @@ import { describe, expect, test, beforeEach, afterEach } from 'vitest';
 import { MatrixTestHarness, MockMatrixStoreOptions } from '../matrix';
 import './test-component'
 import { TestComponent } from './test-component'
-import hash from '@neighbourhoods/testing-utils/factories/hash';
+import hash from '../../factories/hash';
 
 /**
  * @vitest-environment jsdom

@@ -3,7 +3,7 @@ import { property } from 'lit/decorators.js';
 import { contextProvider } from '@lit-labs/context';
 import { sensemaker } from './contexts';
 import { SensemakerStore } from '@neighbourhoods/client';
-import { encode } from '@msgpack/msgpack';
+// import { encode } from '@msgpack/msgpack';
 
 export class SensemakerTestHarness extends LitElement {
   /**
@@ -20,7 +20,7 @@ export class SensemakerTestHarness extends LitElement {
 
 
 const MockSensemakerStore = {
-  wrap(component: any) {
+  wrap(_component: any) {
 
   },
 };

@@ -6,7 +6,7 @@ interface AssessmentOptions {
   objective?: boolean
 }
 
-function assessment(options: AssessmentOptions = { objective: false }): Assessment {
+function assessment(_options: AssessmentOptions = { objective: false }): Assessment {
   return {
     value: { Integer: 1 },
     dimension_eh: hash(),

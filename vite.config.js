@@ -13,7 +13,7 @@ export const configure = (UMDName, entryPath) => defineConfig({
       name: UMDName,
     },
     rollupOptions: {
-      // external: /^lit/
+      external: ['/__web-dev-server__web-socket.js'],
     },
   },
   plugins: [tsconfigPaths()],

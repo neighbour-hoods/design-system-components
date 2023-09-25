@@ -24,7 +24,8 @@
         "./lib/testing-utils/src/*"
       ]
     },
-    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo",
+    "skipLibCheck": true
   },
-  "exclude": ["./dist"],
+  "exclude": ["./dist", "**/*.test.ts"],
 }

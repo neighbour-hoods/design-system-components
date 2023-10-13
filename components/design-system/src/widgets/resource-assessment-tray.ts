@@ -1,10 +1,11 @@
-import { LitElement, html } from "lit"
+import { CSSResult, LitElement, css, html } from "lit"
 import { html as staticHtml, unsafeStatic } from "lit/static-html.js"
 import { property } from "lit/decorators.js";
 import { EntryHash, EntryHashB64, encodeHashToBase64 } from "@holochain/client"
 import { Assessment, RangeKind } from "@neighbourhoods/client";
 import { CreateAssessmentWidget } from "./create-assessment-widget";
 import { DisplayAssessmentWidget } from "./display-assessment-widget";
+import { spreadProps } from "@open-wc/lit-helpers";
 
 export interface WidgetBundle<WidgetComponent extends LitElement> {
   name: string,
@@ -25,7 +26,7 @@ export interface AssessmentWidgetConfig {
 
 export type AssessmentWidgetTrayConfig = Map<EntryHashB64, AssessmentWidgetConfig>
 
-export default class ResourceAssessmentTray extends LitElement {
+export default class NHResourceAssessmentTray extends LitElement {
   @property()
   assessmentWidgetTrayConfig!: AssessmentWidgetTrayConfig
 
@@ -69,19 +70,53 @@ export default class ResourceAssessmentTray extends LitElement {
                 .${unsafeStatic('dimensionEh')}=${inputAssessmentWidget.dimensionEh}
                 .${unsafeStatic('resourceEh')}=${this.resourceEh}
                 .${unsafeStatic('resourceDefEh')}=${this.resourceDefEh}
+                .${unsafeStatic('latestAssessment')}=${this.outputAssessments.get(encodeHashToBase64(outputAssessmentWidget.dimensionEh))}
               ></${unsafeStatic(inputAssessmentWidget.widget.name)}>
-              <${unsafeStatic(outputAssessmentWidget.widget.name)}
-                .${unsafeStatic('assessment')}=${this.outputAssessments.get(encodeHashToBase64(outputAssessmentWidget.dimensionEh))}
-              ></${unsafeStatic(outputAssessmentWidget.widget.name)}>
-          `
+              `
+              // <${unsafeStatic(outputAssessmentWidget.widget.name)}
+              //   .${unsafeStatic('assessment')}=${this.outputAssessments.get(encodeHashToBase64(outputAssessmentWidget.dimensionEh))}
+              // ></${unsafeStatic(outputAssessmentWidget.widget.name)}>
           return outputHtml
         })
       }
     `
     return html`
-    <div class="widget-wrapper">
-      ${widgets}
-    </div>
+      <div class="assessment-widget">
+        <div class="assessment-container">
+          <slot name="widgets">${widgets}</slot>
+        </div>
+        <nav class="assessment-widget-menu">
+          <div class="menu-dot"></div>
+          <div class="menu-dot"></div>
+          <div class="menu-dot"></div>
+        </nav>
+      </div>
     `
   }
+
+  static styles: CSSResult[] = [
+    super.styles as CSSResult,
+    css`
+      .assessment-widget-menu {
+        margin: auto 4px;
+        cursor: pointer;
+      }
+      
+      .assessment-widget {
+        background-color: var(--nh-theme-bg-surface);
+        padding: 4px;
+        border: 1px solid var(--nh-theme-accent-default);
+        border-radius: var(--border-r-tiny);
+        display: flex;
+        width: min-content;
+        max-width: 100%;
+        overflow: hidden;
+      }
+      
+      .assessment-container {
+        height: 40px;
+        display: flex;
+      }
+    `,
+  ];
 }

@@ -1,12 +1,39 @@
 import ResourceAssessmentTray, { AssessmentWidgetConfig, AssessmentWidgetTrayConfig } from "./resource-assessment-tray";
 import { html } from "lit";
+import { property } from "lit/decorators.js";
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { CreateAssessmentWidget } from "./create-assessment-widget";
 import { DisplayAssessmentWidget } from "./display-assessment-widget";
 import { Assessment, RangeValueFloat } from "@neighbourhoods/client";
 import { EntryHash, EntryHashB64, encodeHashToBase64 } from "@holochain/client";
+import { NHComponent } from "../ancestors/base";
+import { spreadProps } from "@open-wc/lit-helpers";
+import NHAssessmentContainer from "./assessment-container";
+
+class TestRoot extends NHComponent {
+  static elementDefinitions = {
+    'assessment-container': NHAssessmentContainer,
+    'resource-assessment-tray': ResourceAssessmentTray,
+  }
+
+  render() {
+    return html`<resource-assessment-tray
+                  assessmentWidgetTrayConfig=${this.assessmentWidgetTrayConfig}
+                  resourceEh=${this.resourceEh}
+                  resourceDefEh=${this.resourceDefEh}
+                  outputAssessments=${this.outputAssessments}
+                >
+                </resource-assessment-tray>`
+  }
+}
+
+customElements.define('assessment-tray--test-root', TestRoot)
+customElements.define('assessment-container', NHAssessmentContainer)
 
 class ImportanceAssessmentWidget extends CreateAssessmentWidget {
+  @property()
+  emoji!: string;
+
   render() {
     return html`<div @click=${() => this.dispatchCreateAssessment({
         value: { Float: 1 },
@@ -14,8 +41,22 @@ class ImportanceAssessmentWidget extends CreateAssessmentWidget {
         resource_eh: this.resourceEh,
         resource_def_eh: this.resourceDefEh,
         maybe_input_dataset: null,
-      })} class="create-assessment-div">Click to create Assessment</div>`;
+      })} class="create-assessment-div">
+        <assessment-container .assessmentValue=${(this.latestAssessment!.value as RangeValueFloat).Float} .iconImg=${this.emoji}></assessment-container>
+    </div>`;
   }
+}
+class ThumbsUpEmoji extends ImportanceAssessmentWidget {
+  emoji = "👍"
+}
+class HeartEmoji extends ImportanceAssessmentWidget {
+  emoji = "❤️"
+}
+class StarEmoji extends ImportanceAssessmentWidget {
+  emoji = "⭐"
+}
+class TickEmoji extends ImportanceAssessmentWidget {
+  emoji = "✅"
 }
 
 class TotalImportanceWidget extends DisplayAssessmentWidget {
@@ -47,7 +88,7 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     widget: {
       name: 'importance-assessment-widget',
       range: { Float: { min: 0, max: 1 } },
-      component: ImportanceAssessmentWidget
+      component: TickEmoji
     },
   },
   outputAssessmentWidget: {
@@ -59,9 +100,68 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     }
   },
 });
-customElements.define('resource-assessment-tray', ResourceAssessmentTray)
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+  inputAssessmentWidget: {
+    dimensionEh: inputDimensionEh,
+    widget: {
+      name: 'likes-assessment-widget',
+      range: { Float: { min: 0, max: 1 } },
+      component: HeartEmoji
+    },
+  },
+  outputAssessmentWidget: {
+    dimensionEh: outputDimensionEh,
+    widget: {
+      name: 'total-likes-widget',
+      range: { Float: { min: 0, max: 1000 } },
+      component: TotalImportanceWidget
+    }
+  },
+});
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+  inputAssessmentWidget: {
+    dimensionEh: inputDimensionEh,
+    widget: {
+      name: 'stars-assessment-widget',
+      range: { Float: { min: 0, max: 1 } },
+      component: StarEmoji
+    },
+  },
+  outputAssessmentWidget: {
+    dimensionEh: outputDimensionEh,
+    widget: {
+      name: 'total-stars-widget',
+      range: { Float: { min: 0, max: 1000 } },
+      component: TotalImportanceWidget
+    }
+  },
+});
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+  inputAssessmentWidget: {
+    dimensionEh: inputDimensionEh,
+    widget: {
+      name: 'thumbs-up-assessment-widget',
+      range: { Float: { min: 0, max: 1 } },
+      component: ThumbsUpEmoji
+    },
+  },
+  outputAssessmentWidget: {
+    dimensionEh: outputDimensionEh,
+    widget: {
+      name: 'total-thumbs-up-widget',
+      range: { Float: { min: 0, max: 1000 } },
+      component: TotalImportanceWidget
+    }
+  },
+});
 customElements.define('importance-assessment-widget', ImportanceAssessmentWidget);
-customElements.define('total-importance-widget', TotalImportanceWidget);
+customElements.define('thumbs-up-assessment-widget', ThumbsUpEmoji);
+customElements.define('likes-assessment-widget', HeartEmoji);
+customElements.define('stars-assessment-widget', StarEmoji);
+customElements.define('total-thumbs-up-widget', TotalImportanceWidget);
+// customElements.define('total-likes-widget', TotalImportanceWidget);
+// customElements.define('total-importance-widget', TotalImportanceWidget);
+// customElements.define('total-stars-widget', TotalImportanceWidget);
 
 export interface ResourceAssessmentTrayProps {
   assessmentWidgetTrayConfig: AssessmentWidgetTrayConfig
@@ -72,16 +172,13 @@ export interface ResourceAssessmentTrayProps {
 
 const meta: Meta<ResourceAssessmentTrayProps> = {
   title: "NHComponent/Widgets/ResourceAssessmentTray",
-  component: "resource-assessment-tray",
+  component: "assessment-tray--test-root",
   argTypes: {
   },
-  render: (args) => html`<resource-assessment-tray
-    assessmentWidgetTrayConfig=${args.assessmentWidgetTrayConfig}
-    resourceEh=${args.resourceEh}
-    resourceDefEh=${args.resourceDefEh}
-    outputAssessments=${args.outputAssessments}
-  >
-  </resource-assessment-tray>`,
+  parameters: { 
+    backgrounds: { default: 'surface' },
+  },
+  render: (args) => html`<assessment-tray--test-root ${spreadProps(args)} />`,
 };
 
 export default meta;

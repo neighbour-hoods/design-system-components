@@ -66,6 +66,9 @@ class TotalImportanceWidget extends DisplayAssessmentWidget {
 }
 
 const inputDimensionEh = (Uint8Array.from([1, 2, 3, 4]));
+const inputDimensionEh1 = (Uint8Array.from([1, 23, 3, 4]));
+const inputDimensionEh2 = (Uint8Array.from([1, 2, 34, 4]));
+const inputDimensionEh3 = (Uint8Array.from([1, 2, 3, 45]));
 const outputDimensionEh = Uint8Array.from([1, 2, 3, 5]);
 const resourceEh = Uint8Array.from([1, 2, 3, 6]);
 const resourceDefEh = Uint8Array.from([1, 2, 3, 7]);
@@ -100,7 +103,7 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     }
   },
 });
-assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh1), {
   inputAssessmentWidget: {
     dimensionEh: inputDimensionEh,
     widget: {
@@ -118,7 +121,7 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     }
   },
 });
-assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh2), {
   inputAssessmentWidget: {
     dimensionEh: inputDimensionEh,
     widget: {
@@ -136,7 +139,7 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     }
   },
 });
-assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
+assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh3), {
   inputAssessmentWidget: {
     dimensionEh: inputDimensionEh,
     widget: {
@@ -154,7 +157,7 @@ assessmentWidgetTrayConfig.set(encodeHashToBase64(inputDimensionEh), {
     }
   },
 });
-customElements.define('importance-assessment-widget', ImportanceAssessmentWidget);
+customElements.define('importance-assessment-widget', TickEmoji);
 customElements.define('thumbs-up-assessment-widget', ThumbsUpEmoji);
 customElements.define('likes-assessment-widget', HeartEmoji);
 customElements.define('stars-assessment-widget', StarEmoji);

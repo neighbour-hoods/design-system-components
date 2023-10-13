@@ -1,5 +1,7 @@
-import ResourceAssessmentTray from './resource-assessment-tray';
+import NHResourceAssessmentTray from './resource-assessment-tray';
+import NHAssessmentContainer from './assessment-container';
 
 export {
-  ResourceAssessmentTray,
+  NHResourceAssessmentTray,
+  NHAssessmentContainer
 }

@@ -1,15 +1,14 @@
 import { css, CSSResult, html, PropertyValueMap } from "lit";
 import {property, query, queryAll } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
-import { NHComponentShoelace } from "./ancestors/base";
+import { NHComponentShoelace } from "../ancestors/base";
 
-export default class NHAssessmentWidget extends NHComponentShoelace {
-  @property()
-  name!: string;
+export default class NHAssessmentContainer extends NHComponentShoelace {
   @property()
   iconImg!: string;
   @property()
   iconAlt!: string;
+  @property()
+  assessmentValue!: number;
   @queryAll(".assessment-icon-container")
   _containers!: HTMLElement[];
   @query(".assessment-background")
@@ -45,27 +44,15 @@ export default class NHAssessmentWidget extends NHComponentShoelace {
 
   render() {
     return html`
-      <div class="assessment-widget">
-        <div class="assessment-container">
-          <div
-            class="${classMap({
-              [`${this.name.toLowerCase()}-assessment`]: !!this.name,
-            })}assessment-icon-container"
-          >
-            <div class="assessment-background"></div>
-            <img
-              class="assessment-icon"
-              src=${`data:image/png;base64,${this.iconImg}`}
-              alt=${this.iconAlt}
-            />
-            <div class="assessment-community-counter">255</div>
-          </div>
-        </div>
-        <nav class="assessment-widget-menu">
-          <div class="menu-dot"></div>
-          <div class="menu-dot"></div>
-          <div class="menu-dot"></div>
-        </nav>
+      <div
+        class="assessment-icon-container"
+      >
+        <div class="assessment-background"></div>
+        ${this.iconImg.length < 2
+        ? html`<img class="assessment-icon" src=${`data:image/png;base64,${this.iconImg}`} alt=${this.iconAlt} />`
+        : html`<div class="unicode-emoji-container"><span>${this.iconImg}</span></div>`
+        }
+        <div class="assessment-community-counter">${this.assessmentValue}</div>
       </div>
     `;
   }
@@ -83,27 +70,6 @@ export default class NHAssessmentWidget extends NHComponentShoelace {
         --border-r-tiny: 6px;
 
         --box-shadow-subtle-small: 0px 0px 2px rgba(0, 0, 0, 0.5);
-      }
-
-      .assessment-widget-menu {
-        margin: auto 4px;
-        cursor: pointer;
-      }
-
-      .assessment-widget {
-        background-color: var(--nh-theme-bg-surface);
-        padding: 4px;
-        border: 1px solid var(--nh-theme-accent-default);
-        border-radius: var(--border-r-tiny);
-        display: flex;
-        width: min-content;
-        max-width: 100%;
-        overflow: hidden;
-      }
-
-      .assessment-container {
-        height: 40px;
-        display: flex;
       }
 
       .assessment-community-counter {
@@ -145,6 +111,18 @@ export default class NHAssessmentWidget extends NHComponentShoelace {
       .assessment-icon-container:hover > .assessment-community-counter {
         opacity: 1;
         margin-top: 42px;
+        top: 15px;
+        border-radius: 8px
+      }
+
+      .unicode-emoji-container {
+        display: grid;
+        place-content: center;
+        height: 100%;
+        width: 100%
+      }
+      .unicode-emoji-container span {
+        font-size: 1.5rem;
       }
 
       .assessment-background {

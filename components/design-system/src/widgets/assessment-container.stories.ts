@@ -1,8 +1,8 @@
 import { b64images } from '@neighbourhoods/design-system-styles';
 import type { Meta, StoryObj } from '@storybook/web-components';
-import NHAssessmentWidget from './assessment-widget';
+import NHAssessmentContainer from './assessment-container';
 
-customElements.define('nh-assessment-widget', NHAssessmentWidget)
+customElements.define('nh-assessment-container', NHAssessmentContainer)
 
 interface AssessmentWidgetProps {
   name: string;
@@ -11,8 +11,8 @@ interface AssessmentWidgetProps {
 }
 
 const meta: Meta<AssessmentWidgetProps> = {
-  title: 'NHComponent/AssessmentWidget',
-  component: 'nh-assessment-widget',
+  title: 'NHComponent/Widgets/AssessmentContainer',
+  component: 'nh-assessment-container',
   argTypes: {
     name: { control: 'text' },
     iconImg: { control: 'text' },

@@ -48,7 +48,7 @@ export default class NHAssessmentContainer extends NHComponentShoelace {
         class="assessment-icon-container"
       >
         <div class="assessment-background"></div>
-        ${this.iconImg.length < 2
+        ${this.iconImg.match(/^\s*data:([a-z]+\/[a-z0-9\-\+]+(;[a-z\-]+\=[a-z0-9\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i) 
         ? html`<img class="assessment-icon" src=${`data:image/png;base64,${this.iconImg}`} alt=${this.iconAlt} />`
         : html`<div class="unicode-emoji-container"><span>${this.iconImg}</span></div>`
         }
@@ -159,14 +159,6 @@ export default class NHAssessmentContainer extends NHComponentShoelace {
         z-index: 2;
         position: absolute;
         filter: drop-shadow(var(--box-shadow-subtle-small));
-      }
-
-      .menu-dot {
-        width: 5px;
-        height: 5px;
-        margin: 4px;
-        border-radius: var(--border-r-tiny);
-        background-color: var(--nh-theme-accent-default);
       }
     `,
   ];

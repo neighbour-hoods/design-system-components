@@ -32,14 +32,14 @@ export default class NHPostCard extends NHComponent {
           ${this.textContent !== "" ? html`<p>${this.textContent}</p>` : null}
           <slot name="image"></slot>
         </div>
-        <nh-assessment-widget slot="footer" .name=${kebabCase(this.title)} .iconAlt=${`Assess post: "${this.title}"`} .iconImg=${this.iconImg}></nh-assessment-widget>
+        <nh-assessment-container slot="footer" .name=${kebabCase(this.title)} .iconAlt=${`Assess post: "${this.title}"`} .iconImg=${this.iconImg}></nh-assessment-container>
       </nh-card>
     `;
   }
 
   static get elementDefinitions() {
     return {
-      "nh-assessment-widget": NHAssessmentWidget,
+      "nh-assessment-container": NHAssessmentWidget,
       "nh-card": NHCard,
     };
   }

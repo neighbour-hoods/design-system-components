@@ -5,7 +5,7 @@ import { EntryHash, EntryHashB64, encodeHashToBase64 } from "@holochain/client"
 import { Assessment, RangeKind } from "@neighbourhoods/client";
 import { CreateAssessmentWidget } from "./create-assessment-widget";
 import { DisplayAssessmentWidget } from "./display-assessment-widget";
-import { spreadProps } from "@open-wc/lit-helpers";
+import { NHComponent } from "components/design-system/dist";
 
 export interface WidgetBundle<WidgetComponent extends LitElement> {
   name: string,
@@ -26,7 +26,7 @@ export interface AssessmentWidgetConfig {
 
 export type AssessmentWidgetTrayConfig = Map<EntryHashB64, AssessmentWidgetConfig>
 
-export default class NHResourceAssessmentTray extends LitElement {
+export default class NHResourceAssessmentTray extends NHComponent {
   @property()
   assessmentWidgetTrayConfig!: AssessmentWidgetTrayConfig
 
@@ -55,7 +55,6 @@ export default class NHResourceAssessmentTray extends LitElement {
   registerScopedComponents() {
     this.assessmentWidgetTrayConfig.forEach(({inputAssessmentWidget, outputAssessmentWidget}) => {
       this.registry!.define(inputAssessmentWidget.widget.name, inputAssessmentWidget.widget.component);
-      this.registry!.define(outputAssessmentWidget.widget.name, outputAssessmentWidget.widget.component);
     })
   }
 
@@ -81,6 +80,43 @@ export default class NHResourceAssessmentTray extends LitElement {
       }
     `
     return html`
+      <style>
+        slot[name="widgets"] {
+          display: flex;
+          background: var(--nh-theme-bg-detail);
+          overflow-x: auto
+        }
+
+        .assessment-widget-menu {
+          margin: auto 4px;
+          cursor: pointer;
+        }
+        
+        .assessment-widget {
+          background-color: var(--nh-theme-bg-surface);
+          padding: 4px;
+          border: 1px solid var(--nh-theme-accent-default);
+          border-radius: var(--border-r-tiny);
+          display: flex;
+          width: min-content;
+          max-width: 100%;
+          overflow: hidden;
+        }
+        
+        .assessment-container {
+          height: 40px;
+          display: flex;
+        }
+
+        .menu-dot {
+          width: 5px;
+          height: 5px;
+          margin: 4px;
+          border-radius: var(--border-r-tiny);
+          background-color: var(--nh-theme-accent-default);
+        }
+      </style>
+
       <div class="assessment-widget">
         <div class="assessment-container">
           <slot name="widgets">${widgets}</slot>
@@ -94,9 +130,15 @@ export default class NHResourceAssessmentTray extends LitElement {
     `
   }
 
-  static styles: CSSResult[] = [
-    super.styles as CSSResult,
+  static styles = [
+    // super.styles as CSSResult,
     css`
+      slot[name="widgets"] {
+        display: flex;
+        background: var(--nh-theme-bg-detail);
+        overflow-x: auto
+      }
+
       .assessment-widget-menu {
         margin: auto 4px;
         cursor: pointer;
@@ -116,6 +158,14 @@ export default class NHResourceAssessmentTray extends LitElement {
       .assessment-container {
         height: 40px;
         display: flex;
+      }
+
+      .menu-dot {
+        width: 5px;
+        height: 5px;
+        margin: 4px;
+        border-radius: var(--border-r-tiny);
+        background-color: var(--nh-theme-accent-default);
       }
     `,
   ];

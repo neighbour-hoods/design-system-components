@@ -38,7 +38,7 @@ export default class NHResourceAssessmentTray extends NHComponent {
 
   @property()
   outputAssessments!: Map<EntryHashB64, Assessment>
-
+  
   registry?: CustomElementRegistry
   
   @property()
@@ -60,14 +60,17 @@ export default class NHResourceAssessmentTray extends NHComponent {
   }
 
   registerScopedComponents() {
-    this.assessmentWidgetTrayConfig.forEach(({inputAssessmentWidget, outputAssessmentWidget}) => {
-      this.registry!.define(inputAssessmentWidget.widget.name, inputAssessmentWidget.widget.component);
+    this.assessmentWidgetTrayConfig.forEach(({inputAssessmentWidget}) => {
+      typeof ((this as any).registry.get(inputAssessmentWidget.widget.name)) == "undefined" && this.registry!.define(inputAssessmentWidget.widget.name, inputAssessmentWidget.widget.component);
     })
   }
 
-  render() {
+  connectedCallback(): void {
+    super.connectedCallback();
     this.registerScopedComponents();
+  }
 
+  render() {
     const widgets = staticHtml`
       ${
         Array.from(this.assessmentWidgetTrayConfig.values()).map(({inputAssessmentWidget, outputAssessmentWidget}) => {

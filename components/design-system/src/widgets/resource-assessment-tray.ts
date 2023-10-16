@@ -40,6 +40,13 @@ export default class NHResourceAssessmentTray extends NHComponent {
   outputAssessments!: Map<EntryHashB64, Assessment>
 
   registry?: CustomElementRegistry
+  
+  @property()
+  expanded: boolean = false;
+
+  toggleExpanded() {
+    this.expanded = !this.expanded
+  }
 
   override createRenderRoot() {
     this.registry = new CustomElementRegistry()
@@ -117,11 +124,11 @@ export default class NHResourceAssessmentTray extends NHComponent {
         }
       </style>
 
-      <div class="assessment-widget">
+      <div class="assessment-widget" data-expanded=${this.expanded}>
         <div class="assessment-container">
           <slot name="widgets">${widgets}</slot>
         </div>
-        <nav class="assessment-widget-menu">
+        <nav class="assessment-widget-menu" @click=${() => {this.toggleExpanded(); this.requestUpdate()}}>
           <div class="menu-dot"></div>
           <div class="menu-dot"></div>
           <div class="menu-dot"></div>

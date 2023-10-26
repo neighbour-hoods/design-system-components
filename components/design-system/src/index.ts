@@ -1,5 +1,5 @@
 import NHAlert from './alert'
-import NHAssessmentWidget from './assessment-widget'
+
 import NHButtonGroup from './button-group'
 import NHButton from './button'
 import NHCard from './card'
@@ -15,9 +15,9 @@ import NHTabButton from './tab-button'
 export * from './ancestors/base'
 
 export * from './profile'
+export * from './widgets'
 export {
   NHAlert,
-  NHAssessmentWidget,
   NHButtonGroup,
   NHButton,
   NHCard,

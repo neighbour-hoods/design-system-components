@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/web-components";
 
 import { b64images } from '@neighbourhoods/design-system-styles';
 
-import { BasicWidget } from "./assessment-widget.stories";
+import { BasicWidget } from "./widgets/assessment-container.stories";
 import NHButton from './button'
 import NHCard from './card'
 

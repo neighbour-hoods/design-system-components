@@ -27,7 +27,7 @@ interface Void {}
 
 const meta: Meta<Void> = {
   title: 'NHDevUtil/DesignSystemImports',
-  component: 'nh-assessment-widget',
+  component: 'nh-assessment-container',
   render: () => html`
     <p>[compiler-level test only] <test-1 /></p>
   `
